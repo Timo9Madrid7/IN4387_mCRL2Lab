@@ -1,0 +1,29 @@
+<true*.shield_up.(!(shield_up || shield_down))*> <shield_down> true
+
+&&
+
+[true*.c_check_shield(true)] (<make_xray> true && [!make_xray] false)
+
+&&
+
+nu X.[!c_check_shield(true)]X && [make_xray] false
+
+&&
+
+<true*.c_shield_down.c_make_xray> [c_result(true)] true
+
+&&
+
+[true*.c_shield_down.c_make_xray] mu X.[!c_result(true)]X && <true> true
+
+&&
+
+[true*.shield_up.!shield_down*.make_xray] false
+
+&&
+
+[true*.shield_up] nu X.[!shield_down]X && [make_xray] false
+
+&&
+
+[ true* ] < true > true

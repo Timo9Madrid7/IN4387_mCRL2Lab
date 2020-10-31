@@ -1,0 +1,19 @@
+sort Queue = struct empty | queued(N: Nat, Q: Queue);
+
+map enqueue: Nat # Queue -> Queue;
+	dequeue: Queue -> Nat;
+	remove: Queue -> Queue;
+	size: Queue -> Nat;
+
+var n,m: Nat;
+	q: Queue;
+
+eqn enqueue(n,empty) = queued(n,empty);
+	enqueue(n,queued(m,q)) = queued(m,enqueue(n,q));
+	
+	dequeue(queued(n,q)) = n;
+	
+	remove(queued(n,q)) = q;
+	
+	size(empty) = 0;
+	size(queued(n,q)) = 1 + size(q);

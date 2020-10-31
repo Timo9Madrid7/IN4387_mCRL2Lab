@@ -1,0 +1,44 @@
+sort Queue = struct empty | queued(N: Job, Q: Queue);
+sort Job;
+
+map enqueue: Job # Queue -> Queue;
+	dequeue: Queue -> Job;
+	remove: Queue -> Queue;
+	size: Queue -> Nat;
+
+var n,m: Job;
+	q: Queue;
+
+eqn enqueue(n,empty) = queued(n,empty);
+	enqueue(n,queued(m,q)) = queued(m,enqueue(n,q));
+	
+	dequeue(queued(n,q)) = n;
+	
+	remove(queued(n,q)) = q;
+	
+	size(empty) = 0;
+	size(queued(n,q)) = 1 + size(q);
+
+act s_send, print: Job;
+	add, r_send: Job;
+	send: Job;
+
+proc
+printer = sum j: Job . s_send(j) . print(j) . printer;
+server(q: Queue) = sum j: Job . add(j) . server(enqueue(j,q)) 
+				+ r_send(dequeue(q)) . server(remove(q));
+
+init
+allow({
+send,
+print,
+add 
+},
+
+comm({
+s_send|r_send -> send
+},
+	
+printer || server(empty)
+
+));

@@ -1,0 +1,15 @@
+sort Modes = struct open | close | stuck;
+
+act	door_open, door_close;
+	send_pos: Modes;
+	door_check;
+
+proc
+DC(s: Modes) = sum s: Modes . ( 
+  (s == stuck) -> ( (door_open + door_close) . send_pos(s) . DC() + door_check . (door_open . send_pos(open). DC(s=open) + door_close . send_pos(close) . DC(s=close)) )
++ (s == open) -> ( door_open . send_pos(s) . DC() + door_close . send_pos(close) . DC(s=close) )
++ (s == close) -> ( door_open . send_pos(open) . DC(s=open) + door_close . send_pos(s) . DC() )
+);
+
+init
+DC(close);	

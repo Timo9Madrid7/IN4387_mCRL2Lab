@@ -1,0 +1,16 @@
+act
+in0, in1, out0, out1;
+
+proc
+s0 = in1.q1 + in0.q0;
+
+q1 = in0.q10 + in1.q11 + out1.s0;
+q10 = out1.q0;
+q11 = out1.q1;
+
+q0 = in0.q00 + in1.q01 + out0.s0;
+q01 = out0.q1;
+q00 = out0.q0;
+
+init
+s0;

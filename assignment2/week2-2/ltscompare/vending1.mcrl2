@@ -1,0 +1,11 @@
+act
+  coin,  abort, coinOut, chooseTea, chooseCoffee, coffeeOut, teaOut;
+
+proc
+  Vending = coin . ( abort . coinOut . Vending
+                   + chooseCoffee . coffeeOut . Vending
+                   + chooseTea . teaOut . Vending
+                   );
+
+init
+  Vending;

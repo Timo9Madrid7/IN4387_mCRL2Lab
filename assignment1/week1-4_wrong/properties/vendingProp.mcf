@@ -1,0 +1,71 @@
+[true* . eur1in] (<tea> true && <coffee> true && <cancel> true)
+
+&&
+
+[true* . eur1in . eur1in] (<chocolate> true && <tea> true && <coffee> true && <cancel> true)
+
+&&
+
+[true* . eur2in] (<chocolate> true && <tea> true && <coffee> true && <cancel> true)
+
+&&
+
+[true* . eur1in . eur1in . (tea || coffee)] (  (<eur1out> true && [!eur1out] false)
+                                            || (<eur2out> true && [!eur2out] false)
+                                            || (<eur1out> true && <eur2out> true && [!(eur1out || eur2out)] false)
+                                            )
+
+&&
+
+[true* . eur2in . (tea || coffee)] (  (<eur1out> true && [!eur1out] false)
+                                   || (<eur2out> true && [!eur2out] false)
+                                   || (<eur1out> true && <eur2out> true && [!(eur1out || eur2out)] false)
+                                   )
+
+&&
+
+[true* . eur1in . eur2in . chocolate] (<eur1out> true && [!eur1out] false)
+
+&&
+
+[true* . eur2in . eur1in . chocolate] (<eur1out> true && [!eur1out] false)
+
+&&
+
+[eur1in . eur1in . eur1in . (eur1in || eur2in) ] false
+
+&&
+
+[eur1in . eur1in . eur2in] false
+
+&&
+
+[eur1in . eur2in . (eur1in || eur2in)] false
+
+&&
+
+[eur2in . eur1in . (eur1in || eur2in)] false
+
+&&
+
+[true*] <true> true
+
+&&
+
+[true* . eur1in] <true* . eur1out> true
+
+&&
+
+[true* . eur2in] <true* . eur2out> true
+
+&&
+
+[true* . eur1in . eur2in . !(eur1out || eur2out) . eur2out . eur2out] false
+
+&&
+
+[true* . eur2in . eur1in . !(eur1out || eur2out) . eur2out . eur2out] false
+
+&&
+
+[true* . eur1in . eur1in . eur1in . !(eur1out || eur2out) . eur2out . eur2out] false

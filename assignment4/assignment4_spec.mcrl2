@@ -1,0 +1,42 @@
+act
+  shield_down, shield_up,
+  s_shield_down, r_shield_down, c_shield_down,
+  s_shield_up, r_shield_up, c_shield_up,
+  make_xray,
+  s_make_xray, r_make_xray; c_make_xray;
+  s_check_shield, r_check_shield, c_check_shield: Bool;
+  s_result, r_result, c_result: Bool;
+
+proc
+  C  = s_shield_down . C
+     + s_make_xray . sum b: Bool. r_result(b) . C
+     + s_shield_up . C;
+
+  X  = r_make_xray .
+       sum b: Bool. s_check_shield(b) .
+       (  b -> make_xray . s_result(true) . X
+       <> s_result(false) . X
+       );
+  S  = r_shield_down . shield_down . S1
+     + r_check_shield(false) . S;
+
+  S1 = r_shield_up . shield_up . S
+     + r_check_shield(true) . S1;
+
+init
+  allow({ shield_down
+        , shield_up
+        , make_xray
+        , c_shield_down
+        , c_shield_up
+        , c_make_xray
+        , c_check_shield
+        , c_result
+        },
+    comm({ s_shield_down|r_shield_down -> c_shield_down
+         , s_shield_up|r_shield_up -> c_shield_up
+         , s_make_xray|r_make_xray -> c_make_xray
+         , s_check_shield|r_check_shield -> c_check_shield
+         , s_result|r_result -> c_result
+         },
+      C || S || X));

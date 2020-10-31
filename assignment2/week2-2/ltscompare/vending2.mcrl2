@@ -1,0 +1,24 @@
+act
+  coin, abort, invalidCoin, customerCancel, coinOut,
+  chooseTea, chooseCoffee, coffeeOut, teaOut,
+  grind, bag, boil;
+
+proc
+  Vending = coin . ( invalidCoin . coinOut . Vending
+                   + customerCancel . coinOut . Vending
+                   + chooseCoffee . Coffee
+                   + chooseTea . Tea
+                   );
+
+  Coffee  = grind . Coffee0;
+  Coffee0 = boil . Coffee0
+          + boil . coffeeOut . Vending
+          ;
+
+  Tea     = bag . Tea0;
+  Tea0    = boil . Tea0
+          + boil . teaOut . Vending
+          ;
+
+init
+  Vending;

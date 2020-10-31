@@ -1,0 +1,11 @@
+act
+	simonSays, frankieSays, do, relax;
+
+proc
+	t0 = simonSays.t1 + frankieSays.t2;
+	t1 = do.t3;
+	t2 = relax.t3;
+	t3 = (simonSays.tau.t1) + (frankieSays.tau.t2);
+
+init
+	t0;

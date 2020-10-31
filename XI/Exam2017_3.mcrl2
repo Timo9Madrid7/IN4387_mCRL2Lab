@@ -1,0 +1,18 @@
+act
+req: Nat;
+up, down, stop;
+open, close;
+
+proc
+flo(f: Nat) = sum n: Nat . (n<=9) -> (
+  (n==f) -> req(n) . flo()
++ (n>f) -> req(n) . close . MoveUp(n, f) 
++ (n<f) -> req(n) . close . MoveDown(n, f)
+);
+
+MoveUp(n,f: Nat) = (f!=n-1) -> up . MoveUp(f=f+1) <> up . stop . open . flo(f=n);
+
+MoveDown(n,f: Nat) = (f!=n+1) -> down . MoveDown(f=Int2Nat(f-1)) <> down . stop . open . flo(f=n);
+
+init
+flo(0);

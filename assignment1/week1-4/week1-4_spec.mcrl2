@@ -1,0 +1,16 @@
+act
+eur1in, eur2in,
+coffee, tea, chocolate,
+cancel, eur1out, eur2out;
+
+proc
+s0 = eur1in.in_1 + eur2in.in_2;
+in_1 = coffee.s0 + tea.s0 + eur1in.in_2 + eur2in.in_3 + cancel.out_1;
+in_2 = coffee.out_1 + tea.out_1 + chocolate.s0 + eur1in.in_3 + cancel.out_2_plus;
+out_2_plus = eur2out.s0;
+in_3 = coffee.out_2_plus + tea.out_2_plus + chocolate.out_1 + cancel.out_2;
+out_1 = eur1out.s0;
+out_2 = eur2out.out_1;
+
+init
+s0;

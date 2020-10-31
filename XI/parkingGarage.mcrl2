@@ -1,0 +1,31 @@
+map spaces: Nat;
+map tabulate: Bool # Nat -> List(Bool);
+map update: List(Bool) # Nat # Bool -> List(Bool);
+
+var n: Nat;
+	b, b0: Bool;
+	bs: List(Bool);
+
+eqn spaces = 2;
+	
+	tabulate(b,0) = [];
+	(n>0) -> tabulate(b,n) = b |> tabulate(b,Int2Nat(n-1));
+	
+	update(b |> bs,0,b0) = b0 |> bs;
+	(n>0) -> update(b |> bs,n,b0) = b |> update(bs,Int2Nat(n-1),b0);
+
+map test_list: List(Bool);
+eqn test_list = [true, true, false, true, false];
+
+act
+car_enter, car_leave: Nat;
+
+proc
+Garage(park_list: List(Bool)) = 
+ sum n: Nat . (n < spaces) -> (
+	(park_list.n) -> car_enter(n) . Garage(update(park_list,n,false))
+	+ !(park_list.n) -> car_leave(n) . Garage(update(park_list,n,true))
+);
+
+init
+Garage(tabulate(true,spaces));

@@ -1,0 +1,38 @@
+act
+s_price, r_price, c_price: Nat; % s_price sends a price
+								% r_price receives a price
+								% c_price represents communication
+s_haggle, r_haggle, c_haggle: Nat;
+s_accept, r_accept, c_accept;
+s_product, r_product, c_product;
+s_reject, r_reject, c_reject;
+s_decline, r_decline, c_decline;
+s_transferReq, r_transferReq, c_transferReq: Nat;
+s_transferAck, r_transferAck, c_transferAck: Nat;
+
+proc
+Seller = sum n: Nat.(n <= 5) -> s_price(n).Sstep2(n);
+Sstep2(n: Nat) = r_decline.Seller + sum m: Nat.r_haggle(m).((m >= n) -> s_accept.r_transferAck(m).s_product.Seller +
+															(m < n) -> (s_reject.Sstep2(n+1) + s_accept.r_transferAck(m).s_product.Seller));
+
+Customer = sum n: Nat.r_price(n).(s_decline.Customer + sum m: Nat.(m <= n) -> s_haggle(m).Cstep2a(m, n));
+Cstep2a(m: Nat, n: Nat) = r_accept.s_transferReq(m).r_product.Customer + (m < n) -> r_reject.(s_decline.Customer + s_haggle(m+1).Cstep2a(m+1,n));
+
+Bank = sum m: Nat.r_transferReq(m).s_transferAck(m).Bank;
+
+init
+allow({ c_price, c_haggle, c_accept, c_product, c_reject
+, c_decline, c_transferReq, c_transferAck
+},
+
+comm({	s_price|r_price -> c_price,
+		s_haggle|r_haggle -> c_haggle,
+		s_accept|r_accept -> c_accept,
+        s_product|r_product -> c_product,
+        s_reject|r_reject -> c_reject,
+        s_decline|r_decline -> c_decline,
+        s_transferReq|r_transferReq -> c_transferReq,
+        s_transferAck|r_transferAck -> c_transferAck
+},
+
+Seller || Customer || Bank));

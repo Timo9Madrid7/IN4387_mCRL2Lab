@@ -1,0 +1,40 @@
+sort Direction = struct north | east | south | west;
+
+map	rotate_left: Direction -> Direction;
+	rotate_right: Direction -> Direction;
+	N,M: Nat;
+
+eqn rotate_left(north) = west;
+	rotate_left(west) = south;
+	rotate_left(south) = east;
+	rotate_left(east) = north;
+	
+	rotate_right(north) = east;
+	rotate_right(east) = south;
+	rotate_right(south) = west;
+	rotate_right(west) = north;
+	
+	N = 4;
+	M = 3;
+
+act detect: Bool;
+	suck;
+	turnLeft, turnRight, forward;
+	pos: Nat # Nat;
+
+proc
+Robot(n,m: Nat, dir: Direction, b: Bool) = 
+b -> detect(b) . suck . Robot(b=false) 
+<> (detect(b).Robot(b=false) + detect(b).Move(n,m,dir)) 
++ pos(n,m) . Robot();
+
+Move(n,m: Nat, dir: Direction) = 
+  turnLeft . Robot(dir=rotate_left(dir),b=false) 
++ turnRight . Robot(dir=rotate_right(dir),b=false)
++ (dir==north && m<M-1) -> forward . Robot(m=m+1,b=false)
++ (dir==west && n>0) -> forward . Robot(n=Int2Nat(n-1),b=false)
++ (dir==south && m>0) -> forward . Robot(m=Int2Nat(m-1),b=false)
++ (dir==east && n<N-1) -> forward . Robot(n=n+1,b=false);
+
+init
+Robot(0,0, east, true);

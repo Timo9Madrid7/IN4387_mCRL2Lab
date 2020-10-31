@@ -1,0 +1,14 @@
+act
+in0, in1, out0, out1;
+
+proc
+s0 = in1.s1 + in0.s2;
+s1 = in0.s3 + in1.s5 + out1.s0;
+s3 = out0.s1;
+s5 = out1.s1;
+s2 = in0.s4 + in1.s6 + out0.s0;
+s4 = out0.s2;
+s6 = out1.s2;
+
+init
+s0;

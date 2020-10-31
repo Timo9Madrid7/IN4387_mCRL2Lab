@@ -1,0 +1,15 @@
+sort Direction = struct north | east | south | west;
+
+map	rotate_left: Direction -> Direction;
+	rotate_right: Direction -> Direction;
+
+eqn rotate_left(north) = west;
+	rotate_left(west) = south;
+	rotate_left(south) = east;
+	rotate_left(east) = north;
+	
+	rotate_right(north) = east;
+	rotate_right(east) = south;
+	rotate_right(south) = west;
+	rotate_right(west) = north;
+

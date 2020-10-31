@@ -1,0 +1,26 @@
+sort MyNat;
+cons zero : MyNat;
+	 successor : MyNat -> MyNat;
+
+map eq : MyNat # MyNat -> Bool;
+	add : MyNat # MyNat -> MyNat;
+	mul : MyNat # MyNat -> MyNat;
+	pow : MyNat # MyNat -> MyNat;
+	
+
+var n, m: MyNat;
+
+eqn eq(zero, zero) = true;
+	eq(zero, successor(n)) = false;
+	eq(successor(n), zero) = false;
+	eq(successor(n), successor(m)) = eq(n, m);
+	add(n, zero) = n;
+	add(zero, n) = n;
+	add(n, successor(m)) = successor(add(n, m));
+	add(successor(n), m) = successor(add(n, m));
+	mul(n, zero) = zero; 	
+	mul(n, successor(m)) = add(n, mul(n, m));
+	pow(m, zero) = successor(zero);
+	pow(m, successor(n)) = mul(m, pow(m, n));
+	
+%pow( successor(successor(zero)),successor(successor(successor(zero))) )

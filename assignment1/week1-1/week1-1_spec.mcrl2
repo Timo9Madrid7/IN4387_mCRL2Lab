@@ -1,0 +1,9 @@
+act
+coin, tea, coffee;
+
+proc
+s0 = coin.s1;
+s1 = tea.s0 + coffee.s0;
+
+init
+s0;

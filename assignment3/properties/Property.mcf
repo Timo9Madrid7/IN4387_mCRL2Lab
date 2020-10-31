@@ -1,0 +1,74 @@
+( [ true*
+  . exists n: Nat.
+    c_price(n)
+  ] (  (  < c_decline > true
+       || < c_reject > true
+       || exists m: Nat. val (m <= 5) =>
+          < c_haggle(m) > true
+       )
+    && [ forall m: Nat. !(c_decline || c_reject || c_haggle(m)) ] false
+    )
+)
+
+&&
+
+( [ true*
+  . c_reject
+  ] (  < c_decline > true
+    || < exists m: Nat. c_haggle(m) > true
+    && [ forall m: Nat. !(c_decline || c_haggle(m)) ] false
+    )
+)
+
+&&
+
+( forall n: Nat. val (n <= 5) =>
+  [ true*
+  . c_haggle(n)
+  . c_reject
+  . !(c_haggle(n+1) || c_decline)
+  ] false
+)
+
+&&
+
+( forall n,m: Nat. val (n <= 5 && m <= 5 && n <= m) =>
+  [ true* .
+    c_price(n) .
+    c_haggle(m)
+  ] (  < c_accept > true
+    && [ !c_accept ] false
+    )
+)
+
+&&
+
+( forall n,m: Nat. val (n <= 5 && m <= 5 && n > m) =>
+  [ true* . c_price(n) . c_haggle(m) ] (  < c_accept > true
+                                       && < c_reject > true
+                                       && [ !(c_accept || c_reject) ] false )
+)
+
+&&
+
+( [ true* . c_accept ] (  < exists n: Nat. c_transferReq(n) > true
+                       && [ forall n: Nat. !c_transferReq(n) ] false )
+)
+
+&&
+
+( forall n: Nat. val (n <= 5) =>
+  [ true* . c_transferReq(n) ] (  < c_transferAck(n) > true
+                               && [ !c_transferAck(n) ] false )
+)
+
+&&
+
+( [ true* . c_accept ] ( mu X. [ true ] X && < true > true ||
+                               [ !c_product ] false  )
+)
+
+
+&&
+
+[ true* ] < true > true
