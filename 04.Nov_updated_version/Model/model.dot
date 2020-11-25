@@ -1,0 +1,267 @@
+digraph G {
+center = TRUE;
+mclimit = 10.0;
+nodesep = 0.05;
+node [ width=0.25, height=0.25, label="" ];
+S0 [ peripheries=2 ];
+S0
+S1
+S2
+S3
+S4
+S5
+S6
+S7
+S8
+S9
+S10
+S11
+S12
+S13
+S14
+S15
+S16
+S17
+S18
+S19
+S20
+S21
+S22
+S23
+S24
+S25
+S26
+S27
+S28
+S29
+S30
+S31
+S32
+S33
+S34
+S35
+S36
+S37
+S38
+S39
+S40
+S41
+S42
+S43
+S44
+S45
+S46
+S47
+S48
+S49
+S50
+S51
+S52
+S53
+S54
+S55
+S56
+S57
+S58
+S59
+S60
+S61
+S62
+S63
+S64
+S65
+S66
+S67
+S68
+S69
+S70
+S71
+S72
+S73
+S74
+S75
+S76
+S77
+S78
+S79
+S80
+S81
+S82
+S83
+S84
+S85
+S86
+S87
+S88
+S89
+S90
+S91
+S92
+S93
+S94
+S95
+S96
+S97
+S98
+S99
+S100
+S101
+S102
+S103
+S104
+S105
+S106
+S107
+S108
+S0 -> S1[label="c_requestcheck(0)"];
+S1 -> S2[label="check(0, 0)|check(0, 1)|check(0, 2)"];
+S2 -> S3[label="c_responsecheck(0, true)"];
+S2 -> S4[label="c_responsecheck(0, false)"];
+S3 -> S5[label="c_requestcheck(1)"];
+S4 -> S6[label="c_requestfix(0)"];
+S5 -> S7[label="check(1, 0)|check(1, 1)|check(1, 2)|check(1, 3)|check(1, 4)"];
+S6 -> S8[label="fix(0)"];
+S6 -> S8[label="fix(1)"];
+S6 -> S8[label="fix(2)"];
+S7 -> S9[label="c_responsecheck(1, true)"];
+S7 -> S10[label="c_responsecheck(1, false)"];
+S8 -> S3[label="c_responsecheck(0, true)"];
+S8 -> S4[label="c_responsecheck(0, false)"];
+S9 -> S11[label="c_requestcheck(2)"];
+S10 -> S12[label="c_requestfix(1)"];
+S11 -> S13[label="check(2, 0)|check(2, 1)|check(2, 2)|check(2, 3)|check(2, 4)"];
+S12 -> S14[label="fix(0)"];
+S12 -> S14[label="fix(1)"];
+S12 -> S14[label="fix(3)"];
+S12 -> S14[label="fix(2)"];
+S12 -> S14[label="fix(4)"];
+S13 -> S15[label="c_responsecheck(2, true)"];
+S13 -> S16[label="c_responsecheck(2, false)"];
+S14 -> S9[label="c_responsecheck(1, true)"];
+S14 -> S10[label="c_responsecheck(1, false)"];
+S15 -> S17[label="c_requestcheck(3)"];
+S16 -> S18[label="c_requestfix(2)"];
+S17 -> S19[label="check(3, 0)|check(3, 1)|check(3, 2)"];
+S18 -> S20[label="fix(0)"];
+S18 -> S20[label="fix(1)"];
+S18 -> S20[label="fix(3)"];
+S18 -> S20[label="fix(2)"];
+S18 -> S20[label="fix(4)"];
+S19 -> S21[label="c_responsecheck(3, true)"];
+S19 -> S22[label="c_responsecheck(3, false)"];
+S20 -> S15[label="c_responsecheck(2, true)"];
+S20 -> S16[label="c_responsecheck(2, false)"];
+S21 -> S23[label="liftoffready"];
+S22 -> S24[label="c_requestfix(3)"];
+S23 -> S25[label="liftoff"];
+S24 -> S26[label="fix(0)"];
+S24 -> S26[label="fix(1)"];
+S24 -> S26[label="fix(2)"];
+S25 -> S27[label="c_power(0, true)"];
+S26 -> S21[label="c_responsecheck(3, true)"];
+S26 -> S22[label="c_responsecheck(3, false)"];
+S27 -> S28[label="power(0, true)"];
+S28 -> S29[label="c_responsepower"];
+S29 -> S30[label="c_power(1, true)"];
+S30 -> S31[label="power(1, true)"];
+S31 -> S32[label="c_responsepower"];
+S32 -> S33[label="c_requestparacheck(0)"];
+S32 -> S34[label="c_requestparacheck(1)"];
+S32 -> S35[label="c_requestcheckfuel(0)"];
+S33 -> S36[label="paracheck(0)"];
+S34 -> S37[label="paracheck(1)"];
+S35 -> S38[label="checkfuel(0)"];
+S36 -> S32[label="c_responseparacheck(0, true)"];
+S36 -> S39[label="c_responseparacheck(0, false)"];
+S37 -> S32[label="c_responseparacheck(1, true)"];
+S37 -> S40[label="c_responseparacheck(1, false)"];
+S38 -> S32[label="c_responsecheckfuel(0, true)"];
+S38 -> S41[label="c_responsecheckfuel(0, false)"];
+S39 -> S42[label="c_speedup(0)"];
+S39 -> S43[label="c_speedup(1)"];
+S40 -> S44[label="c_adjustdirection(0)"];
+S40 -> S45[label="c_adjustdirection(1)"];
+S41 -> S46[label="c_power(0, false)"];
+S42 -> S47[label="speedup(0)"];
+S43 -> S47[label="speedup(1)"];
+S44 -> S48[label="adjustdirection(0)"];
+S45 -> S48[label="adjustdirection(1)"];
+S46 -> S49[label="power(0, false)"];
+S47 -> S50[label="c_responsespeedup"];
+S48 -> S50[label="c_responseadjustdirection"];
+S49 -> S51[label="c_responsepower"];
+S50 -> S33[label="c_requestparacheck(0)"];
+S50 -> S34[label="c_requestparacheck(1)"];
+S51 -> S52[label="c_detachment(0)"];
+S52 -> S53[label="detachmodule(0)"];
+S53 -> S54[label="c_responsedetachment"];
+S54 -> S55[label="c_requestparacheck(2)"];
+S54 -> S56[label="c_requestparacheck(0)"];
+S54 -> S57[label="c_requestparacheck(1)"];
+S55 -> S58[label="paracheck(2)"];
+S56 -> S59[label="paracheck(0)"];
+S57 -> S60[label="paracheck(1)"];
+S58 -> S61[label="c_responseparacheck(2, true)"];
+S58 -> S54[label="c_responseparacheck(2, false)"];
+S59 -> S54[label="c_responseparacheck(0, true)"];
+S59 -> S62[label="c_responseparacheck(0, false)"];
+S60 -> S54[label="c_responseparacheck(1, true)"];
+S60 -> S63[label="c_responseparacheck(1, false)"];
+S61 -> S64[label="c_requestcheckfuel(1)"];
+S62 -> S65[label="c_speedup(1)"];
+S63 -> S66[label="c_adjustdirection(1)"];
+S64 -> S67[label="checkfuel(1)"];
+S65 -> S68[label="speedup(1)"];
+S66 -> S69[label="adjustdirection(1)"];
+S67 -> S54[label="c_responsecheckfuel(1, true)"];
+S67 -> S70[label="c_responsecheckfuel(1, false)"];
+S68 -> S71[label="c_responsespeedup"];
+S69 -> S71[label="c_responseadjustdirection"];
+S70 -> S72[label="c_power(1, false)"];
+S71 -> S56[label="c_requestparacheck(0)"];
+S71 -> S57[label="c_requestparacheck(1)"];
+S72 -> S73[label="power(1, false)"];
+S73 -> S74[label="c_responsepower"];
+S74 -> S75[label="c_detachment(1)"];
+S75 -> S76[label="detachmodule(1)"];
+S76 -> S77[label="c_responsedetachment"];
+S77 -> S78[label="c_detachment(4)"];
+S78 -> S79[label="detachmodule(4)"];
+S79 -> S80[label="c_responsedetachment"];
+S80 -> S81[label="c_requestparacheck(0)"];
+S80 -> S82[label="c_requestparacheck(1)"];
+S80 -> S83[label="c_requestcheckfuel(2)"];
+S80 -> S84[label="c_power(2, true)"];
+S81 -> S85[label="paracheck(0)"];
+S82 -> S86[label="paracheck(1)"];
+S83 -> S87[label="checkfuel(2)"];
+S84 -> S88[label="power(2, true)"];
+S85 -> S80[label="c_responseparacheck(0, true)"];
+S85 -> S89[label="c_responseparacheck(0, false)"];
+S86 -> S80[label="c_responseparacheck(1, true)"];
+S86 -> S90[label="c_responseparacheck(1, false)"];
+S87 -> S80[label="c_responsecheckfuel(2, true)"];
+S87 -> S91[label="c_responsecheckfuel(2, false)"];
+S88 -> S80[label="c_responsepower"];
+S89 -> S92[label="c_speedup(2)"];
+S90 -> S93[label="c_adjustdirection(2)"];
+S91 -> S94[label="c_power(2, false)"];
+S92 -> S95[label="speedup(2)"];
+S93 -> S96[label="adjustdirection(2)"];
+S94 -> S97[label="power(2, false)"];
+S95 -> S98[label="c_responsespeedup"];
+S96 -> S98[label="c_responseadjustdirection"];
+S97 -> S99[label="c_responsepower"];
+S98 -> S81[label="c_requestparacheck(0)"];
+S98 -> S82[label="c_requestparacheck(1)"];
+S99 -> S100[label="c_requestvalvesremap"];
+S100 -> S101[label="valvesremap"];
+S101 -> S102[label="c_requestvalvescheck"];
+S102 -> S103[label="valvescheck"];
+S103 -> S104[label="c_responsevalvescheck(true)"];
+S103 -> S99[label="c_responsevalvescheck(false)"];
+S104 -> S105[label="c_detachment(2)"];
+S105 -> S106[label="detachmodule(2)"];
+S106 -> S107[label="c_responsedetachment"];
+S107 -> S108[label="c_ending"];
+}

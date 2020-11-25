@@ -1,0 +1,22 @@
+act
+s_requestcheck, r_requestcheck, c_requestcheck: Nat;
+s_responsecheck, r_responsecheck, c_responsecheck: Nat # Bool;
+s_requestfix, r_requestfix, c_requestfix: Nat; % fix communication
+check: Nat # Nat;
+fix: Nat;
+
+s_requestparacheck, r_requestparacheck, c_requestparacheck: Nat;
+s_responseparacheck, r_responseparacheck, c_responseparacheck: Nat # Bool;
+paracheck: Nat;
+
+proc
+SC = r_requestcheck(0) . SC_check(0) + r_requestfix(0) . SC_fix + SC_paracheck;
+
+SC_check(para: Nat) = (para<3) -> ((para<2) -> check(0,para) . SC_check(para+1) <> check(0,para) . sum b: Bool .  s_responsecheck(0,b) . SC);
+
+SC_fix = sum para: Nat . (para<3) -> fix(para) . sum b: Bool . s_responsecheck(0, b) . SC;
+
+SC_paracheck = sum para: Nat . (para<3) -> r_requestparacheck(para) . paracheck(para) . sum b: Bool . s_responseparacheck(para,b) . SC;
+		
+init
+SC;

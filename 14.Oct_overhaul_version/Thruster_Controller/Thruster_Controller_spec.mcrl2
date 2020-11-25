@@ -1,0 +1,34 @@
+act 
+r_requestvalvescheck, s_requestvalvescheck, c_requestvalvescheck;
+r_responsevalvescheck, s_responsevalvescheck, c_responsevalvescheck: Bool;
+r_requestvalvesremap, s_requestvalvesremap, c_requestvalvesremap;
+r_adjustdirection, s_adjustdirection, c_adjustdirection: Nat;
+r_speedup, s_speedup, c_speedup: Nat;
+r_requestcheck, s_requestcheck, c_requestcheck: Nat;
+r_responsecheck, s_responsecheck, c_responsecheck: Nat # Bool;
+r_requestfix, s_requestfix, c_requestfix: Nat;
+
+check: Nat # Nat;
+speedup: Nat;
+adjustdirection: Nat;
+valvescheck;
+valvesremap;
+fix: Nat;
+
+proc
+TC = r_requestcheck(1) . TC_check(0) + r_requestfix(1) . TC_fix + TC_valvesremap + TC_valvescheck + sum module: Nat. (module<=4) -> (TC_speedup(module) + TC_adjustdirection(module));
+
+TC_valvesremap = r_requestvalvesremap . valvesremap . TC;
+
+TC_speedup(module: Nat) = r_speedup(module) . speedup(module) . TC;
+
+TC_adjustdirection(module: Nat) = r_adjustdirection(module) . adjustdirection(module) . TC;
+
+TC_valvescheck = r_requestvalvescheck . valvescheck . sum b: Bool . s_responsevalvescheck(b) . TC;
+
+TC_check(module: Nat) = (module<=4) -> ((module<=3) -> check(1,module) . TC_check(module+1) <> check(1,module) . sum b: Bool .  s_responsecheck(1,b) . TC);
+
+TC_fix =  sum module: Nat . (module<=4) -> fix(module) . sum b: Bool . s_responsecheck(1,b) . TC;
+
+init
+TC;

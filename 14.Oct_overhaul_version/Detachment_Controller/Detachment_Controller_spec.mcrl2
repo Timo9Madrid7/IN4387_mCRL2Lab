@@ -1,0 +1,21 @@
+act
+s_requestcheck, r_requestcheck, c_requestcheck: Nat;
+s_responsecheck, r_responsecheck, c_responsecheck: Nat # Bool;
+s_requestfix, r_requestfix, c_requestfix: Nat;
+s_detachment, r_detachment, c_detachment: Nat;
+
+check: Nat # Nat;
+detachmodule: Nat;
+fix: Nat;
+
+proc
+DC = r_requestcheck(2) . DC_readycheck(0) + r_requestfix(2) . DC_fix + sum n: Nat . (n<4) -> (DC_detachment(n));
+
+DC_readycheck(module: Nat) = (module<4) -> ((module<3) -> check(2,module) . DC_readycheck(module+1) <> check(2,module) . sum b: Bool .  s_responsecheck(2,b) . DC);
+
+DC_fix = sum module: Nat . (module<4) -> fix(module) . sum b: Bool . s_responsecheck(2, b) . DC;
+
+DC_detachment(module: Nat) = r_detachment(module) . detachmodule(module) . DC;
+
+init
+DC;
